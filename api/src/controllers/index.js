@@ -62,3 +62,18 @@ const getDbFoods = () => {
   .catch(error => new TypeError(error));
 };
 // getDbFoods().then(data => console.log(data));
+
+//traigo todas las recetas juntas
+const getAllFoods = async () => {
+  const apiFoods = await getApiFoods();
+  const dbFoods = await getDbFoods();
+  const allFoods = apiFoods?.concat(dbFoods);
+
+  return allFoods;
+}
+// getAllFood().then((data)=> console.log(data));
+
+module.exports = {
+  getAllFoods,
+}
+
