@@ -3,8 +3,7 @@ const dotenv = require("dotenv");
 const path = require("path");
 dotenv.config({ path: path.join(__dirname, "../../", ".env") });
 const { API_KEY } = process.env;
-const { Recipe,Diet } = require("../db");
-
+const { Recipe, Diet } = require("../db");
 
 //trae las recetas de api
 const getApiFoods = () => {
@@ -22,7 +21,10 @@ const getApiFoods = () => {
           summary: f.summary,
           score: f.spoonacularScore,
           healthScore: f.healthScore,
-          steps: f.analyzedInstructions?.map((searchStep) => searchStep.steps),
+          steps: f.analyzedInstructions?.map((searchStep) => searchStep.steps?.map((el) => {
+              return { number: el.number, step: el.step };
+            })
+          ),
           img: f.image,
           diets: f.diets?.map((diet) => diet),
         };
@@ -32,7 +34,6 @@ const getApiFoods = () => {
 };
 // getApiFoods().then((data) => console.log(data));
 
-
 //traigo las recetas de la base de datos
 const getDbFoods = () => {
   return Recipe.findAll({
@@ -41,25 +42,25 @@ const getDbFoods = () => {
       attributes: ["name"],
       through: {
         attributes: [],
-      }
-    }
+      },
+    },
   })
-  .then((response)=> {
-    return response?.map(foodsDb => {
-      return {
-        id: foodsDb.id,
-        name: foodsDb.name,
-        summary: foodsDb.summary,
-        score: foodsDb.score,
-        healthScore: foodsDb.healthScore,
-        steps: foodsDb.steps?.map((searchStep) => searchStep),
-        img: foodsDb.img,
-        diets: foodsDb.diets?.map((diet) => diet.name),
-        createdInDB: foodsDb.createdInDB,
-      };
+    .then((response) => {
+      return response?.map((foodsDb) => {
+        return {
+          id: foodsDb.id,
+          name: foodsDb.name,
+          summary: foodsDb.summary,
+          score: foodsDb.score,
+          healthScore: foodsDb.healthScore,
+          steps: foodsDb.steps?.map((searchStep) => searchStep),
+          img: foodsDb.img,
+          diets: foodsDb.diets?.map((diet) => diet.name),
+          createdInDB: foodsDb.createdInDB,
+        };
+      });
     })
-  })
-  .catch(error => new TypeError(error));
+    .catch((error) => new TypeError(error));
 };
 // getDbFoods().then(data => console.log(data));
 
@@ -70,10 +71,71 @@ const getAllFoods = async () => {
   const allFoods = apiFoods?.concat(dbFoods);
 
   return allFoods;
-}
+};
 // getAllFood().then((data)=> console.log(data));
+
+
+const getApiDetailFood = (id) => {
+  const apiUrl = `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`;
+
+  const apiInfo = axios(apiUrl)
+    .then((response) => response.data)
+    .catch(error => new TypeError(error));
+  
+  const apiDetail = apiInfo
+    .then((foodDetail) => {
+      return {
+        name: foodDetail.title,
+        dishTypes: foodDetail.dishTypes?.map(type => type),
+        diets: foodDetail.diets?.map(diet => diet),
+        summary: foodDetail.summary,
+        score: foodDetail.spoonacularScore,
+        healthScore: foodDetail.healthScore,
+        img: foodDetail.image,
+        steps: foodDetail.instructions.replace(/<[^>]*>?/g, ''),
+      }
+    })
+    .catch(error => new TypeError(error));
+  
+    return apiDetail;
+}
+// getApiDetailFood(716426).then(data => console.log(data));
+
+const getDbDetailFood = async (id) => {
+  const foods = await Recipe.findByPk(id, {
+    include: [{
+      model: Diet,
+      as: "diets",
+      attributes: ["name"],
+      through: { attributes: [] },
+    }],
+  })
+  .then((foods)=> foods.toJSON())
+  .catch(error => new TypeError(error));
+
+  foods.diets = foods.diets?.map(diet => diet.name);
+
+  return foods;
+};
+
+const getDiets = () => {
+  const apiUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}`;
+  const diets = axios(apiUrl, { params: { addRecipeInformation: true, number: 40 } })
+    .then(response => response.data.results)
+    .then(json => json?.map(diet => diet.diets)) //array de arrays de dietas repetidas
+    .then(diet => diet.flat()) //array de dietas repetidas
+    .then(flat => [...new Set(flat)]) //array unico de dietas
+    .catch(error => new Error(error));
+
+  return diets
+}
+
+// getDiets().then((data)=> console.log(da  ta))
+
 
 module.exports = {
   getAllFoods,
-}
-
+  getApiDetailFood,
+  getDbDetailFood,
+  getDiets,
+};

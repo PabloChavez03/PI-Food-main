@@ -6,6 +6,7 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   // defino el modelo
+
   // sequelize.authenticate()
   //   .then(()=>{
   //     console.log("Conexion establecida con Food");
