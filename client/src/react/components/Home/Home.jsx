@@ -1,17 +1,20 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { getRecipes } from "../../../redux/actions-creators";
+import { filterPerDiets, getDiets, getRecipes, orderByName } from "../../../redux/actions-creators";
 import { Link } from "react-router-dom";
 
 import "./Home.css";
 
 import Recipe from "../Recipe/Recipe";
 import Paginated from "../Paginated/Paginated";
+import Filter from "../Filter/Filter";
+import Ordening from "../Ordening/Ordening";
 
 export default function Home() {
   const dispatch = useDispatch();
   const recipesAll = useSelector((state) => state.recipesAll);
+  const dietsAll = useSelector((state) => state.dietsAll);
 
   const [actualPage, setActualPage] = useState(1);
   const recipesPerPage = 9;
@@ -31,8 +34,31 @@ export default function Home() {
     dispatch(getRecipes());
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(getDiets());
+  },[dispatch]);
+
+  const handleSelect = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+
+    switch (value) {
+      case "asc" :
+        return dispatch(orderByName("asc"));
+      case "desc":
+        return dispatch(orderByName("desc"));
+      default:
+        return dispatch(filterPerDiets(value));
+    }
+  }
+
   return (
     <div>
+
+      <Ordening dietsAll={dietsAll} handleSelect={handleSelect}/>
+      <Filter dietsAll={dietsAll} handleSelect={handleSelect}/>
+
+
       <div className="cards__container">
         {actualRecipesPerPage?.map((el) => (
           <div className="cards__container-card">
