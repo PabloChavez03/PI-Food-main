@@ -4,6 +4,8 @@ import './App.css';
 import Landing from './react/components/Landing/Landing';
 import Layout from './react/components/Layout/Layout';
 import Home from './react/components/Home/Home';
+import CreateRecipe from './react/components/CreateRecipe/CreateRecipe';
+import About from './react/components/About/About';
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
         <Route exact path={"/"} element={<Landing/>} />
         <Route path={"/"} element={<Layout/>}>
           <Route path={"/home"} element={<Home/>}/>
+          <Route path={"/createrecipe"} element={<CreateRecipe/>}/>
+          <Route path={"/about"} element={<About/>}/>
         </Route>
       </Routes>
     </div>

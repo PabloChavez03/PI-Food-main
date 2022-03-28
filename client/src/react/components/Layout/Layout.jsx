@@ -5,7 +5,7 @@ import './Layout.css';
 const navLinks = [
     {name: "Intro", path: "/"},
     {name: "Home", path: "/home"},
-    {name: "Create Recipe", path: "createfood"},
+    {name: "Create Recipe", path: "createrecipe"},
     {name: "About", path: "/about"},
 ];
 
@@ -32,10 +32,10 @@ export default function Layout () {
         </header>
       </div>
 
-      <div>
+      <main className="layout__outlet-main">
         {/* renderiza el contenido de las rutas */}
         <Outlet/>
-      </div>
+      </main>
     </div>
   );
 }

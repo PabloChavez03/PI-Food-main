@@ -1,7 +1,3 @@
-.layout__container {
-  display: flex;
-}
-
 /* .layour__navbar__container {
 } */
 
@@ -21,6 +17,10 @@
 .layout__navbar-header-nav {
   height: 100%;
 }
+/* 
+.layout__outlet-main {
+  /* display: flex; */
+/* }  */
 
   nav {
     height: 100%;
