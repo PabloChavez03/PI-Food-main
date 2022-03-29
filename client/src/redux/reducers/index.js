@@ -46,7 +46,7 @@ export default function reducer(state = initialState, action) {
     case ORDER_BY_SCORE:
       if (action.payload === "s+") {
         return {
-          ...state,
+            ...state,
           recipesAll: [...state.recipesAll]?.sort((a, b) => b.score - a.score),
         };
       } else {
