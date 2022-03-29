@@ -15,7 +15,7 @@ export default function Paginated ({recipesPerPage, recipesAll, paginate}) {
         {
           numbersPaginated?.map(numberPage => (
             <li className="paginated__container-li" key={numberPage}>
-              <a id="paginated__container-number" href={"#"} onClick={() => paginate(numberPage)}>{numberPage}</a>
+              <a id="paginated__container-number" href={"#!"} onClick={() => paginate(numberPage)}>{numberPage}</a>
             </li>
           ))
         }

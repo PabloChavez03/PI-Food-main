@@ -7,3 +7,17 @@
 .cards__container-card {
   font-size: 10px;
 }
+
+.searchbar__container {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  padding: 2vh;
+  
+}
+
+.searchbar__select-container {
+  display: flex;
+  width: 29%;
+  justify-content: space-around;
+}

@@ -18,10 +18,11 @@ const getApiFoods = () => {
         return {
           id: f.id,
           name: f.title,
-          summary: f.summary,
+          summary: f.summary.replace(/<[^>]*>?/g, ""),
           score: f.spoonacularScore,
           healthScore: f.healthScore,
-          steps: f.analyzedInstructions?.map((searchStep) => searchStep.steps?.map((el) => {
+          steps: f.analyzedInstructions?.map((searchStep) =>
+            searchStep.steps?.map((el) => {
               return { number: el.number, step: el.step };
             })
           ),
@@ -86,14 +87,14 @@ const getApiDetailFood = (id) => {
     .then((foodDetail) => {
       return {
         name: foodDetail.title,
-        dishTypes: foodDetail.dishTypes?.map(type => type),
-        diets: foodDetail.diets?.map(diet => diet),
-        summary: foodDetail.summary,
+        dishTypes: foodDetail.dishTypes?.map((type) => type),
+        diets: foodDetail.diets?.map((diet) => diet),
+        summary: foodDetail.summary.replace(/<[^>]*>?/g, ""),
         score: foodDetail.spoonacularScore,
         healthScore: foodDetail.healthScore,
         img: foodDetail.image,
-        steps: foodDetail.instructions.replace(/<[^>]*>?/g, ''),
-      }
+        steps: foodDetail.instructions.replace(/<[^>]*>?/g, ""),
+      };
     })
     .catch(error => new TypeError(error));
   

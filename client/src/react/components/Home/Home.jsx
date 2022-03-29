@@ -1,7 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { filterPerDiets, getDiets, getRecipes, orderByName } from "../../../redux/actions-creators";
+import {
+  filterPerDiets,
+  getDiets,
+  getRecipes,
+  orderByName,
+  orderByScore,
+} from "../../../redux/actions-creators";
 import { Link } from "react-router-dom";
 
 import "./Home.css";
@@ -10,6 +16,7 @@ import Recipe from "../Recipe/Recipe";
 import Paginated from "../Paginated/Paginated";
 import Filter from "../Filter/Filter";
 import Ordening from "../Ordening/Ordening";
+import SearchBar from "../SearchBar/SearchBar";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -36,28 +43,38 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getDiets());
-  },[dispatch]);
+  }, [dispatch]);
 
   const handleSelect = (e) => {
     e.preventDefault();
     const value = e.target.value;
 
     switch (value) {
-      case "asc" :
+      case "asc":
         return dispatch(orderByName("asc"));
       case "desc":
         return dispatch(orderByName("desc"));
+      case "s+":
+        return dispatch(orderByScore("s+"));
+      case "s-":
+        return dispatch(orderByScore("s-"));
       default:
         return dispatch(filterPerDiets(value));
     }
-  }
+  };
 
   return (
     <div>
 
-      <Ordening dietsAll={dietsAll} handleSelect={handleSelect}/>
-      <Filter dietsAll={dietsAll} handleSelect={handleSelect}/>
+      <div className="searchbar__container">
 
+        <div className="searchbar__select-container">
+        <Ordening dietsAll={dietsAll} handleSelect={handleSelect} />
+        <Filter dietsAll={dietsAll} handleSelect={handleSelect} />
+        </div>
+
+        <SearchBar />
+      </div>
 
       <div className="cards__container">
         {actualRecipesPerPage?.map((el) => (
@@ -74,7 +91,6 @@ export default function Home() {
         recipesAll={recipesAll.length}
         recipesPerPage={recipesPerPage}
       />
-
     </div>
   );
 }

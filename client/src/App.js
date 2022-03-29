@@ -6,6 +6,7 @@ import Layout from './react/components/Layout/Layout';
 import Home from './react/components/Home/Home';
 import CreateRecipe from './react/components/CreateRecipe/CreateRecipe';
 import About from './react/components/About/About';
+import RecipeDetail from './react/components/RecipeDetail/RecipeDetail';
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
       <Routes>
         <Route exact path={"/"} element={<Landing/>} />
         <Route path={"/"} element={<Layout/>}>
-          <Route path={"/home"} element={<Home/>}/>
+          <Route path={"/home/"} element={<Home/>}/>
+          <Route path={"/home/:id"} element={<RecipeDetail/>}/>
           <Route path={"/createrecipe"} element={<CreateRecipe/>}/>
           <Route path={"/about"} element={<About/>}/>
         </Route>
