@@ -54,7 +54,7 @@ const getDbFoods = () => {
           summary: foodsDb.summary,
           score: foodsDb.score,
           healthScore: foodsDb.healthScore,
-          steps: foodsDb.steps?.map((searchStep) => searchStep),
+          steps: foodsDb.steps,
           img: foodsDb.img,
           diets: foodsDb.diets?.map((diet) => diet.name),
           createdInDB: foodsDb.createdInDB,

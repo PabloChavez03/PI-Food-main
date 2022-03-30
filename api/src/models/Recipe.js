@@ -40,7 +40,7 @@ module.exports = (sequelize) => {
       allowNull: true,
     },
     steps: {
-      type: DataTypes.ARRAY(DataTypes.TEXT),
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     img: {

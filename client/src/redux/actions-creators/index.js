@@ -67,3 +67,11 @@ export const getRecipeDetail = (id) => {
       })
   }
 }
+
+export const postRecipe = (info) => {
+  return function (dispatch) {
+    const post = axios.post("http://localhost:3001/recipe", info)
+      .then(response => response);
+    return post;    
+  }
+}

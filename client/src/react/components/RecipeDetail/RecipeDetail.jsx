@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getRecipeDetail } from "../../../redux/actions-creators";
 
+import "./RecipeDetail.css"
+
 export default function RecipeDetail() {
   const { id } = useParams();
   // console.log(id);
@@ -12,13 +14,15 @@ export default function RecipeDetail() {
 
   useEffect(() => {
     dispatch(getRecipeDetail(id));
-  }, [dispatch]);
+  }, [dispatch,id]);
 
   return (
-    <div>
+    <div className="detail__container">
       <h3>{detailRecipe.name}</h3>
       <h3>{detailRecipe.dishTypes}</h3>
       <h3>{detailRecipe.diets?.map((el) => el)}</h3>
+      <h3>{detailRecipe.score}</h3>
+      <h3>{detailRecipe.healthScore}</h3>
       <span>{detailRecipe.summary}</span>
       <img src={detailRecipe.img} alt="img not found" />
     </div>
