@@ -74,6 +74,15 @@ export default function CreateRecipe() {
       ...input,
       diets: [...input.diets, value],
     });
+
+    //set Error a revisar 
+
+    setError(
+      validate({
+        ...input,
+        diets: value,
+      })
+    );
   };
 
   const handleDeleteSelect = (e) => {
@@ -146,8 +155,8 @@ export default function CreateRecipe() {
         />
         <div>
           {input.diets?.map((el) => (
-            <p>
-              <p value={el}>{el}</p>
+            <p key={el}>
+              <p key={el} value={el}>{el}</p>
               <button value={el} onClick={(e) => handleDeleteSelect(e)}>
                 x
               </button>
