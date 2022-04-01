@@ -6,7 +6,7 @@
   width: 100%;
   top: 0;
   left: 0;
-  background-color: #303236;
+  background-color: #ddaaaa;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -17,11 +17,6 @@
 .layout__navbar-header-nav {
   height: 100%;
 }
-/* 
-.layout__outlet-main {
-  /* display: flex; */
-/* }  */
-
   nav {
     height: 100%;
   }
@@ -52,6 +47,11 @@
   
 nav ul li a:hover,
 nav ul li a:active {
-  background-color: #808080;
+  background-color: #cc9999;
     color: white;
 }
+
+
+/* .layout__outlet-main {
+  align-items: center;
+} */

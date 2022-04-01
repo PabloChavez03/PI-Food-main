@@ -27,7 +27,13 @@ const getApiFoods = () => {
             })
           ),
           img: f.image,
-          diets: f.diets?.map((diet) => diet),
+          diets: f.diets?.map((diet) => {
+            let dietTwo = diet.split("");
+            let dietSeparate = dietTwo.splice(1);
+            let dietUpper = dietTwo[0].toUpperCase().split("");
+            let dietResult = dietUpper.concat(dietSeparate).join("");
+            return dietResult;
+          }).join(" "),
         };
       });
     })
@@ -56,7 +62,13 @@ const getDbFoods = () => {
           healthScore: foodsDb.healthScore,
           steps: foodsDb.steps,
           img: foodsDb.img,
-          diets: foodsDb.diets?.map((diet) => diet.name),
+          diets: foodsDb.diets?.map((diet) => {
+            let dietTwo = diet.name?.split("");
+            let dietSeparate = dietTwo.splice(1);
+            let dietUpper = dietTwo[0].toUpperCase().split("");
+            let dietResult = dietUpper.concat(dietSeparate).join("");
+            return dietResult;
+          }).join(" "),
           createdInDB: foodsDb.createdInDB,
         };
       });
