@@ -24,9 +24,14 @@ export default function CreateRecipe() {
   const [input, setInput] = useState(initialState);
   const [error, setError] = useState(initialState);
 
+  const validateImg = (urlImg) => {
+    const regex = /.*\.(gif|jpe?g|bmp|png)$/igm;
+    return regex.test(urlImg);
+  }
+
   const validate = (input) => {
     let err = {};
-    setError(initialState);
+    // setError(initialState);
 
     if (!input.name) {
       err.name = "Debe ingresar un nombre";
@@ -36,51 +41,60 @@ export default function CreateRecipe() {
     }
     if (!input.score) {
       err.score = "Debe ingresar una puntuación";
+    } else if (input.score && input.score > 100) {
+      err.score = "La puntuación debe ser menor a 100"
     }
     if (!input.healthScore) {
       err.healthScore = "Debe ingresar una puntuación de comida saludable";
+    } else if (input.healthScore && input.healthScore > 100) {
+      err.healthScore = "La puntuación de comida saludable debe ser menor a 100";
     }
     if (!input.img) {
-      err.img = "Debe ingresar una imagen";
+      err.img = "Debe ingresar una imagen de la receta";
+    } else if (!validateImg(input.img)) {
+      err.img = "La url ingresada no es una imagen"
     }
     if (!input.steps) {
-      err.steps = "Debe ingresar los pasos de la receta";
+      err.steps = "Debe ingresar los pasos a seguir para realizar la receta";
     }
-    if (!input.diets.lenght) {
-      err.diets = "Debe ingresar al menos un tipo de dieta";
+    if (input.diets.length === 0) {
+      err.diets = "Debe ingresar al menos dos tipos de dieta";
     }
 
     return err;
-  }
+  };
 
   const handleInputOnChange = (e) => {
     e.preventDefault();
     const name = e.target.name;
     const value = e.target.value;
-    setInput({
-      ...input,
+    setInput((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
     //demoError
-    setError(validate({ 
-      ...input, 
-      [name]: value }));
+    setError(
+      validate({
+        ...input,
+        [name]: value,
+      })
+    );
   };
 
   const handleSelectOnChange = (e) => {
     const value = e.target.value;
     e.preventDefault();
-    setInput({
-      ...input,
+    setInput((prev) => ({
+      ...prev,
       diets: [...input.diets, value],
-    });
+    }));
 
-    //set Error a revisar 
+    //set Error a revisar
 
     setError(
       validate({
         ...input,
-        diets: value,
+        diets: [...input.diets],
       })
     );
   };
@@ -88,19 +102,23 @@ export default function CreateRecipe() {
   const handleDeleteSelect = (e) => {
     const value = e.target.value;
     e.preventDefault();
-    setInput({
-      ...input,
-      diets: input.diets.filter(el => el !== value),
-    });
+    setInput((prev) => ({
+      ...prev,
+      diets: prev.diets.filter((el) => el !== value),
+    }));
   };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    dispatch(postRecipe(input));
-    alert("Receta creada");
-    navigate("/home");
-    // console.log(input);
-  }
+    if (Object.values(error).length !== 0) {
+      alert("Faltan campos que rellenar");
+    } else {
+      // dispatch(postRecipe(input));
+      // alert("Receta creada satisfactoriamente");
+      // navigate("/home");
+      console.log(input);
+    }
+  };
 
   useEffect(() => {
     dispatch(getDiets());
@@ -116,6 +134,7 @@ export default function CreateRecipe() {
           value={input.name}
           onChange={handleInputOnChange}
         />
+        {error.name && <p>{error.name}</p>}
         <textarea
           placeholder="Summary"
           cols="30"
@@ -124,6 +143,7 @@ export default function CreateRecipe() {
           value={input.summary}
           onChange={handleInputOnChange}
         />
+        {error.summary && <p>{error.summary}</p>}
         <input
           type="number"
           placeholder="Score"
@@ -131,6 +151,7 @@ export default function CreateRecipe() {
           value={input.score}
           onChange={handleInputOnChange}
         />
+        {error.score && <p>{error.score}</p>}
         <input
           type="number"
           placeholder="Health Score"
@@ -138,6 +159,7 @@ export default function CreateRecipe() {
           value={input.healthScore}
           onChange={handleInputOnChange}
         />
+        {error.healthScore && <p>{error.healthScore}</p>}
         <input
           type="text"
           placeholder="Image"
@@ -145,6 +167,7 @@ export default function CreateRecipe() {
           value={input.img}
           onChange={handleInputOnChange}
         />
+        {error.img && <p>{error.img}</p>}
         <textarea
           placeholder="Steps"
           cols="30"
@@ -153,16 +176,20 @@ export default function CreateRecipe() {
           value={input.steps}
           onChange={handleInputOnChange}
         />
+        {error.steps && <p>{error.steps}</p>}
         <div>
           {input.diets?.map((el) => (
             <p key={el}>
-              <p key={el} value={el}>{el}</p>
+              <span key={el} value={el}>
+                {el}
+              </span>
               <button value={el} onClick={(e) => handleDeleteSelect(e)}>
                 x
               </button>
             </p>
           ))}
         </div>
+        {error.diets && <p>{error.diets}</p>}
         <select onChange={(e) => handleSelectOnChange(e)}>
           <optgroup value="diets" label="Tipos de dieta">
             {dietsAll?.map((el) => (
@@ -170,7 +197,7 @@ export default function CreateRecipe() {
             ))}
           </optgroup>
         </select>
-        <input type="submit" value="Create" />
+        <input type="submit" value="Create" disabled={Object.values(error).length === 0? false : true}/>
       </form>
     </div>
   );
