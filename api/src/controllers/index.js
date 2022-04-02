@@ -27,13 +27,7 @@ const getApiFoods = () => {
             })
           ),
           img: f.image,
-          diets: f.diets?.map((diet) => {
-            let dietTwo = diet.split("");
-            let dietSeparate = dietTwo.splice(1);
-            let dietUpper = dietTwo[0].toUpperCase().split("");
-            let dietResult = dietUpper.concat(dietSeparate).join("");
-            return dietResult;
-          }).join(" "),
+          diets: f.diets?.map((diet) => diet).join(" "),
         };
       });
     })
@@ -62,13 +56,7 @@ const getDbFoods = () => {
           healthScore: foodsDb.healthScore,
           steps: foodsDb.steps,
           img: foodsDb.img,
-          diets: foodsDb.diets?.map((diet) => {
-            let dietTwo = diet.name?.split("");
-            let dietSeparate = dietTwo.splice(1);
-            let dietUpper = dietTwo[0].toUpperCase().split("");
-            let dietResult = dietUpper.concat(dietSeparate).join("");
-            return dietResult;
-          }).join(" "),
+          diets: foodsDb.diets?.map((diet) => diet.name).join(" "),
           createdInDB: foodsDb.createdInDB,
         };
       });
@@ -100,12 +88,12 @@ const getApiDetailFood = (id) => {
       return {
         name: foodDetail.title,
         dishTypes: foodDetail.dishTypes?.map((type) => type),
-        diets: foodDetail.diets?.map((diet) => diet),
+        diets: foodDetail.diets?.map((diet) => diet).join(" "),
         summary: foodDetail.summary.replace(/<[^>]*>?/g, ""),
         score: foodDetail.spoonacularScore,
         healthScore: foodDetail.healthScore,
         img: foodDetail.image,
-        steps: foodDetail.instructions.replace(/<[^>]*>?/g, ""),
+        steps: foodDetail.instructions?.replace(/<[^>]*>?/g, ""),
       };
     })
     .catch(error => new TypeError(error));
@@ -126,7 +114,7 @@ const getDbDetailFood = async (id) => {
   .then((foods)=> foods.toJSON())
   .catch(error => new TypeError(error));
 
-  foods.diets = foods.diets?.map(diet => diet.name);
+  foods.diets = foods.diets?.map((diet) => diet.name).join(" ");
 
   return foods;
 };

@@ -20,7 +20,7 @@ export default function RecipeDetail() {
     <div className="detail__container">
       <h3>{detailRecipe.name}</h3>
       <h3>{detailRecipe.dishTypes}</h3>
-      <h3>{detailRecipe.diets?.map((el) => el)}</h3>
+      <h3>{detailRecipe.diets}</h3>
       <h3>{detailRecipe.score}</h3>
       <h3>{detailRecipe.healthScore}</h3>
       <span>{detailRecipe.summary}</span>

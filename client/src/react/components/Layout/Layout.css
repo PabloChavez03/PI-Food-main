@@ -1,14 +1,17 @@
 /* .layour__navbar__container {
 } */
 
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Signika:wght@300&display=swap');
+
 .layout__navbar-header {
-  height: 56px;
+  /* height: 56px; */
   width: 100%;
   top: 0;
   left: 0;
-  background-color: #ddaaaa;
+  background-color: #66bb66;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+
   align-items: center;
   padding: 18px 20px;
   box-sizing: border-box;
@@ -41,15 +44,23 @@
     height: 100%;
     padding: 16px 10px;
     border-bottom: 4px solid transparent;
+    border-radius: 1em;
     text-decoration: none;
   }
 
   
 nav ul li a:hover,
 nav ul li a:active {
-  background-color: #cc9999;
+  background-color: #77cc77;
     color: white;
 }
+
+#layout__title {
+  font-family: 'Lobster';
+  font-size: 3em;
+  margin-left: .5em;
+
+} 
 
 
 /* .layout__outlet-main {

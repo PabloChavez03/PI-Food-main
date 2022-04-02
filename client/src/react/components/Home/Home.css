@@ -6,7 +6,7 @@
 }
 
 .cards__container-card {
-  background-color: #55ccbb;
+  background-color: #88cc88;
   font-size: 13px;
   display: flex;
   box-sizing: border-box;
@@ -19,6 +19,8 @@
   margin: 15px;
   width: calc((100% / 3) - 30px);
   transition: all 0.4s ease-in-out;
+  border-radius: 1em;
+  justify-content: center;
 }
 
 .cards__container-card:hover {
@@ -26,7 +28,6 @@
 }
 
 .cards__container-card:after {
-  content: "";
   opacity: 2;
   display: block;
   height: 0;
@@ -37,6 +38,10 @@
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
   border-bottom: 15px solid #333a45;
+}
+
+.cards__container-card:link {
+  color: #88cc88;
 }
 
 

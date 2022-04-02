@@ -14,7 +14,7 @@ export default function Layout() {
     <div>
       <div>
         <header className="layout__navbar-header">
-          {/* puedo poner un logo */}
+          <div id="layout__title">Pi Food</div>
           <nav className="layout__navbar-header-nav">
             <ul>
               {navLinks?.map((el) => (
