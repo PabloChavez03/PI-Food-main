@@ -19,7 +19,7 @@ export default function Layout() {
             <ul>
               {navLinks?.map((el) => (
                 <li>
-                  <NavLink to={el.path} key={el.name} id="layout__navbar-a">
+                  <NavLink to={el.path} key={el.name}>
                     {el.name}
                   </NavLink>
                 </li>

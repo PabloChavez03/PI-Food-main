@@ -1,3 +1,19 @@
-.searchbar_container {
+.searchbar__container-name {
   display: flex;
+  width: 29%;
+  height: 6vh;
+  margin-top: 1em;
+}
+
+.searchbar__container-name input {
+  border-radius: 1em;
+  border: none;
+  width: 50%;
+}
+
+.searchbar__container-name button {
+  border-radius: 1em;
+  border: 1px solid;
+  margin-left: .5em;
+  background-color: #bbbbbb;
 }

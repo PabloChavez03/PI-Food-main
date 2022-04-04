@@ -57,7 +57,7 @@ export default function CreateRecipe() {
     if (!input.steps) {
       err.steps = "Debe ingresar los pasos a seguir para realizar la receta";
     }
-    if (input.diets.length === 0) {
+    if (!input.diets.length) {
       err.diets = "Debe ingresar al menos dos tipos de dieta";
     }
 
@@ -106,6 +106,13 @@ export default function CreateRecipe() {
       ...prev,
       diets: prev.diets.filter((el) => el !== value),
     }));
+
+    setError(
+      validate({
+        ...input,
+        diets: input.diets.filter((el)=> el !== value),
+      })
+    );
   };
 
   const handleOnSubmit = (e) => {
@@ -133,8 +140,10 @@ export default function CreateRecipe() {
           name="name"
           value={input.name}
           onChange={handleInputOnChange}
+          autoComplete={true}
         />
-        {error.name && <p>{error.name}</p>}
+        <label hidden={!error.name}>{error.name}</label>
+
         <textarea
           placeholder="Summary"
           cols="30"
@@ -143,31 +152,37 @@ export default function CreateRecipe() {
           value={input.summary}
           onChange={handleInputOnChange}
         />
-        {error.summary && <p>{error.summary}</p>}
+        <label hidden={!error.summary}>{error.summary}</label>
+
         <input
           type="number"
           placeholder="Score"
           name="score"
           value={input.score}
           onChange={handleInputOnChange}
+          autoComplete={true}
         />
-        {error.score && <p>{error.score}</p>}
+        <label hidden={!error.score}>{error.score}</label>
         <input
           type="number"
           placeholder="Health Score"
           name="healthScore"
           value={input.healthScore}
           onChange={handleInputOnChange}
+          autoComplete={true}
         />
-        {error.healthScore && <p>{error.healthScore}</p>}
+        <label hidden={!error.healthScore}>{error.healthScore}</label>
+
         <input
           type="text"
           placeholder="Image"
           name="img"
           value={input.img}
           onChange={handleInputOnChange}
+          autoComplete={true}
         />
-        {error.img && <p>{error.img}</p>}
+        <label hidden={!error.img}>{error.img}</label>
+
         <textarea
           placeholder="Steps"
           cols="30"
@@ -176,7 +191,8 @@ export default function CreateRecipe() {
           value={input.steps}
           onChange={handleInputOnChange}
         />
-        {error.steps && <p>{error.steps}</p>}
+        <label hidden={!error.steps}>{error.steps}</label>
+
         <div>
           {input.diets?.map((el) => (
             <p key={el}>
@@ -189,15 +205,22 @@ export default function CreateRecipe() {
             </p>
           ))}
         </div>
-        {error.diets && <p>{error.diets}</p>}
-        <select onChange={(e) => handleSelectOnChange(e)}>
+
+        <select onChange={(e) => handleSelectOnChange(e)} multiple={true}>
           <optgroup value="diets" label="Tipos de dieta">
             {dietsAll?.map((el) => (
               <Diets key={el.id} value={el.name} name={el.name} />
             ))}
           </optgroup>
         </select>
-        <input type="submit" value="Create" disabled={Object.values(error).length === 0? false : true}/>
+        <label hidden={!error.diets}>{error.diets}</label>
+
+        <input
+          type="submit"
+          value="Create"
+          disabled={Object.values(error).length === 0 ? false : true}
+          id="form__form-submit"
+        />
       </form>
     </div>
   );

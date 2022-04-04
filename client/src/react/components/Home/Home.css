@@ -40,8 +40,14 @@
   border-bottom: 15px solid #333a45;
 }
 
-.cards__container-card:link {
-  color: #88cc88;
+.cards__container-card a:link {
+  color: #222222;
+  text-decoration: none;
+}
+
+.cards__container-card a:visited {
+  color: #666666;
+  text-decoration: none;
 }
 
 
@@ -51,15 +57,12 @@
   width: 100%;
   justify-content: space-evenly;
   padding: 2vh;
-  
 }
 
 .searchbar__select-container {
   display: flex;
   width: 29%;
+  height: 6vh;
   justify-content: space-around;
-}
-
-a {
-  text-decoration: none;
+  margin-top: 1em;
 }

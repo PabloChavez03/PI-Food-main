@@ -1,0 +1,11 @@
+.landing__container {
+  background-image: url(../Landing/welcome\ PI\ .png);
+  background-size: 1980px 1240px;
+  padding: 40%;
+  display: flex;
+}
+
+.landing__home {
+  display: flex;
+  top: 0;
+}
