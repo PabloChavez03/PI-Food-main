@@ -9,7 +9,7 @@ export default function Landing () {
       <div className="landing__home">
         <h1>Welcome to PI Food</h1>
         <Link to={"/home"}>
-          <button>Ir a Home</button>
+          <button id="landing__button">Ir a Home</button>
         </Link>
       </div>
     </div>

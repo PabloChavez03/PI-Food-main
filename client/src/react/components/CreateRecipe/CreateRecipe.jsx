@@ -193,16 +193,16 @@ export default function CreateRecipe() {
         />
         <label hidden={!error.steps}>{error.steps}</label>
 
-        <div>
+        <div className="diets_select__container">
           {input.diets?.map((el) => (
-            <p key={el}>
+            <div key={el} className="diets_select__container-add">
               <span key={el} value={el}>
                 {el}
               </span>
               <button value={el} onClick={(e) => handleDeleteSelect(e)}>
                 x
               </button>
-            </p>
+            </div>
           ))}
         </div>
 

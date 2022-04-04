@@ -42,3 +42,24 @@
   border: 3px solid #44aa44;
   border-radius: 6px;
 }
+
+.diets_select__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 1px solid green;
+}
+
+.diets_select__container-add {
+  display: flex;
+  flex-direction: row;
+  padding: .5em;
+  margin: .5em;
+  box-sizing: border-box;
+  border: 1px solid blue;
+}
+
+.diets_select__container-add button {
+  margin-left: .5em ;
+}
