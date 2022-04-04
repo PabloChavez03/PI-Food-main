@@ -2,6 +2,8 @@ import React from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import "./Layout.css";
 
+import image from "./cooking.png"
+
 const navLinks = [
   { name: "Intro", path: "/" },
   { name: "Home", path: "/home" },
@@ -14,7 +16,7 @@ export default function Layout() {
     <div>
       <div>
         <header className="layout__navbar-header">
-          <div id="layout__title">Pi Food</div>
+          <div id="layout__title"><img src={image} alt="img not found"></img>Pi Food</div>
           <nav className="layout__navbar-header-nav">
             <ul>
               {navLinks?.map((el) => (

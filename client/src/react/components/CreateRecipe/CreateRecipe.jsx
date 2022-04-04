@@ -5,6 +5,7 @@ import { getDiets, postRecipe } from "../../../redux/actions-creators";
 import { useNavigate } from "react-router-dom";
 
 import "./CreateRecipe.css";
+import Loader from "../Loader/Loader";
 
 export default function CreateRecipe() {
   const dietsAll = useSelector((state) => state.dietsAll);
@@ -23,6 +24,7 @@ export default function CreateRecipe() {
 
   const [input, setInput] = useState(initialState);
   const [error, setError] = useState(initialState);
+  // const [loading, setLoading] = useState(true);
 
   const validateImg = (urlImg) => {
     const regex = /.*\.(gif|jpe?g|bmp|png)$/igm;
@@ -120,9 +122,9 @@ export default function CreateRecipe() {
     if (Object.values(error).length !== 0) {
       alert("Faltan campos que rellenar");
     } else {
-      // dispatch(postRecipe(input));
-      // alert("Receta creada satisfactoriamente");
-      // navigate("/home");
+      dispatch(postRecipe(input));
+      alert("Receta creada satisfactoriamente");
+      navigate("/home");
       console.log(input);
     }
   };
@@ -133,95 +135,99 @@ export default function CreateRecipe() {
 
   return (
     <div className="form__container">
-      <form className="form__form" onSubmit={handleOnSubmit}>
-        <input
-          type="text"
-          placeholder="Name recipe"
-          name="name"
-          value={input.name}
-          onChange={handleInputOnChange}
-          autoComplete={true}
-        />
-        <label hidden={!error.name}>{error.name}</label>
+      {!dietsAll.length ? (
+        <Loader />
+      ) : (
+        <form className="form__form" onSubmit={handleOnSubmit}>
+          <input
+            type="text"
+            placeholder="Name recipe"
+            name="name"
+            value={input.name}
+            onChange={handleInputOnChange}
+            autoComplete={true}
+          />
+          <label hidden={!error.name}>{error.name}</label>
 
-        <textarea
-          placeholder="Summary"
-          cols="30"
-          rows="6"
-          name="summary"
-          value={input.summary}
-          onChange={handleInputOnChange}
-        />
-        <label hidden={!error.summary}>{error.summary}</label>
+          <textarea
+            placeholder="Summary"
+            cols="30"
+            rows="6"
+            name="summary"
+            value={input.summary}
+            onChange={handleInputOnChange}
+          />
+          <label hidden={!error.summary}>{error.summary}</label>
 
-        <input
-          type="number"
-          placeholder="Score"
-          name="score"
-          value={input.score}
-          onChange={handleInputOnChange}
-          autoComplete={true}
-        />
-        <label hidden={!error.score}>{error.score}</label>
-        <input
-          type="number"
-          placeholder="Health Score"
-          name="healthScore"
-          value={input.healthScore}
-          onChange={handleInputOnChange}
-          autoComplete={true}
-        />
-        <label hidden={!error.healthScore}>{error.healthScore}</label>
+          <input
+            type="number"
+            placeholder="Score"
+            name="score"
+            value={input.score}
+            onChange={handleInputOnChange}
+            autoComplete={true}
+          />
+          <label hidden={!error.score}>{error.score}</label>
+          <input
+            type="number"
+            placeholder="Health Score"
+            name="healthScore"
+            value={input.healthScore}
+            onChange={handleInputOnChange}
+            autoComplete={true}
+          />
+          <label hidden={!error.healthScore}>{error.healthScore}</label>
 
-        <input
-          type="text"
-          placeholder="Image"
-          name="img"
-          value={input.img}
-          onChange={handleInputOnChange}
-          autoComplete={true}
-        />
-        <label hidden={!error.img}>{error.img}</label>
+          <input
+            type="text"
+            placeholder="Image"
+            name="img"
+            value={input.img}
+            onChange={handleInputOnChange}
+            autoComplete={true}
+          />
+          <label hidden={!error.img}>{error.img}</label>
 
-        <textarea
-          placeholder="Steps"
-          cols="30"
-          rows="10"
-          name="steps"
-          value={input.steps}
-          onChange={handleInputOnChange}
-        />
-        <label hidden={!error.steps}>{error.steps}</label>
+          <textarea
+            placeholder="Steps"
+            cols="30"
+            rows="10"
+            name="steps"
+            value={input.steps}
+            onChange={handleInputOnChange}
+          />
+          <label hidden={!error.steps}>{error.steps}</label>
 
-        <div className="diets_select__container">
-          {input.diets?.map((el) => (
-            <div key={el} className="diets_select__container-add">
-              <span key={el} value={el}>
-                {el}
-              </span>
-              <button value={el} onClick={(e) => handleDeleteSelect(e)}>
-                x
-              </button>
-            </div>
-          ))}
-        </div>
-
-        <select onChange={(e) => handleSelectOnChange(e)} multiple={true}>
-          <optgroup value="diets" label="Tipos de dieta">
-            {dietsAll?.map((el) => (
-              <Diets key={el.id} value={el.name} name={el.name} />
+          <div className="diets_select__container">
+            {input.diets?.map((el) => (
+              <div key={el} className="diets_select__container-add">
+                <span key={el} value={el}>
+                  {el}
+                </span>
+                <button value={el} onClick={(e) => handleDeleteSelect(e)}>
+                  x
+                </button>
+              </div>
             ))}
-          </optgroup>
-        </select>
-        <label hidden={!error.diets}>{error.diets}</label>
+          </div>
 
-        <input
-          type="submit"
-          value="Create"
-          disabled={Object.values(error).length === 0 ? false : true}
-          id="form__form-submit"
-        />
-      </form>
+          <select onChange={(e) => handleSelectOnChange(e)} multiple={true}>
+            <optgroup value="diets" label="Tipos de dieta">
+              {dietsAll?.map((el) => (
+                <Diets key={el.id} value={el.name} name={el.name} />
+              ))}
+            </optgroup>
+          </select>
+          <label hidden={!error.diets}>{error.diets}</label>
+
+          <input
+            type="submit"
+            value="Create"
+            disabled={Object.values(error).length === 0 ? false : true}
+            id="form__form-submit"
+          />
+        </form>
+      )}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getRecipeDetail } from "../../../redux/actions-creators";
 
-import "./RecipeDetail.css"
+import "./RecipeDetail.css";
 
 export default function RecipeDetail() {
   const { id } = useParams();
@@ -14,7 +14,7 @@ export default function RecipeDetail() {
 
   useEffect(() => {
     dispatch(getRecipeDetail(id));
-  }, [dispatch,id]);
+  }, [dispatch, id]);
 
   return (
     <div className="detail__container">
@@ -34,18 +34,34 @@ export default function RecipeDetail() {
       </div>
       <div className="detail__right-container">
         <div className="detail__right-container-types">
-          <div className="detail__right-container-dishTypes">
+          <div
+            hidden={!detailRecipe.dishTypes}
+            className="detail__right-container-dishTypes"
+          >
             <h3>Dish Types</h3>
             <p>{detailRecipe.dishTypes}</p>
           </div>
-          <div className="detail__right-container-diets">
+          <div
+            hidden={!detailRecipe.diets}
+            className="detail__right-container-diets"
+          >
             <h3>Diets</h3>
             <p>{detailRecipe.diets}</p>
           </div>
         </div>
-        <div className="detail__right-container-summary">
-          <h3>Steps</h3>
+        <div
+          hidden={!detailRecipe.summary}
+          className="detail__right-container-summary"
+        >
+          <h3>Summary</h3>
           <p>{detailRecipe.summary}</p>
+        </div>
+        <div
+          hidden={!detailRecipe.steps}
+          className="detail__right-container-steps"
+        >
+          <h3>Steps</h3>
+          <p>{detailRecipe.steps}</p>
         </div>
       </div>
     </div>

@@ -17,6 +17,7 @@ import Paginated from "../Paginated/Paginated";
 import Filter from "../Filter/Filter";
 import Ordening from "../Ordening/Ordening";
 import SearchBar from "../SearchBar/SearchBar";
+import Loader from "../Loader/Loader";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -33,6 +34,8 @@ export default function Home() {
     lastRecipePerPage
   );
 
+  // const [loading, setLoading] = useState(true);
+
   const paginate = (pageNumber) => {
     setActualPage(pageNumber);
   };
@@ -44,6 +47,10 @@ export default function Home() {
   useEffect(() => {
     dispatch(getDiets());
   }, [dispatch]);
+
+  // useEffect(() =>  {
+  //   actualRecipesPerPage.length? setLoading(false) : setLoading(true)
+  // }, [actualRecipesPerPage])
 
   const handleSelect = (e) => {
     e.preventDefault();
@@ -65,26 +72,33 @@ export default function Home() {
 
   return (
     <div>
-
       <div className="searchbar__container">
-
         <div className="searchbar__select-container">
-        <Ordening dietsAll={dietsAll} handleSelect={handleSelect} />
-        <Filter dietsAll={dietsAll} handleSelect={handleSelect} />
+          <Ordening dietsAll={dietsAll} handleSelect={handleSelect} />
+          <Filter dietsAll={dietsAll} handleSelect={handleSelect} />
         </div>
 
         <SearchBar />
       </div>
 
-      <div className="cards__container">
-        {actualRecipesPerPage?.map((el) => (
-          <div className="cards__container-card">
-            <Link key={el.id} to={`/home/${el.id}`}>
-              <Recipe name={el.name} id={el.id} diets={el.diets} img={el.img} />
-            </Link>
-          </div>
-        ))}
-      </div>
+      {!actualRecipesPerPage.length ? (
+        <Loader />
+      ) : (
+        <div className="cards__container">
+          {actualRecipesPerPage?.map((el) => (
+            <div className="cards__container-card">
+              <Link key={el.id} to={`/home/${el.id}`}>
+                <Recipe
+                  name={el.name}
+                  id={el.id}
+                  diets={el.diets}
+                  img={el.img}
+                />
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
 
       <Paginated
         paginate={paginate}

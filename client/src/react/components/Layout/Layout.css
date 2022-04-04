@@ -104,8 +104,15 @@ nav ul li a:active {
   font-family: 'Lobster';
   font-size: 3em;
   margin-left: .5em;
-
+  display: flex;
+  align-items: center;
 } 
+
+#layout__title img {
+  height: 45px;
+  width: 45px;
+  margin-right: .1em;
+}
 
 
 /* .layout__outlet-main {
