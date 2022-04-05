@@ -12,6 +12,7 @@
   font-size: 1.2em;
   background-color: #fed9ce;
   border-radius: .8em 3em 3em 3em;
+  justify-content: space-between;
 }
 
 .detail__left-container {

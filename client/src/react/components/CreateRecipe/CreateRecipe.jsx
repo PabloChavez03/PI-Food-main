@@ -145,7 +145,6 @@ export default function CreateRecipe() {
             name="name"
             value={input.name}
             onChange={handleInputOnChange}
-            autoComplete={true}
           />
           <label hidden={!error.name}>{error.name}</label>
 
@@ -165,7 +164,6 @@ export default function CreateRecipe() {
             name="score"
             value={input.score}
             onChange={handleInputOnChange}
-            autoComplete={true}
           />
           <label hidden={!error.score}>{error.score}</label>
           <input
@@ -174,7 +172,6 @@ export default function CreateRecipe() {
             name="healthScore"
             value={input.healthScore}
             onChange={handleInputOnChange}
-            autoComplete={true}
           />
           <label hidden={!error.healthScore}>{error.healthScore}</label>
 
@@ -184,7 +181,6 @@ export default function CreateRecipe() {
             name="img"
             value={input.img}
             onChange={handleInputOnChange}
-            autoComplete={true}
           />
           <label hidden={!error.img}>{error.img}</label>
 
