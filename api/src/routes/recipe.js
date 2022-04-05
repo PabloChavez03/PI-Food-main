@@ -4,7 +4,6 @@ const {
   getAllFoods,
   getDbDetailFood,
   getApiDetailFood,
-  getDiets,
 } = require("../controllers");
 const { Diet, Recipe } = require("../db");
 // Importar todos los routers;
@@ -27,11 +26,9 @@ router.get("/recipes", async (req, res) => {
 
       nameFoods.length
         ? res.status(200).send(nameFoods)
-        : res
-            .status(404)
-            .json({
-              msg: "No se encontraron las recetas solicitadas por Query",
-            });
+        : res.status(404).json({
+            msg: "No se encontraron las recetas solicitadas por Query",
+          });
     } catch (error) {
       res.status(404).json({ msg: `El error fue: ${error}` });
     }
@@ -74,25 +71,8 @@ router.get("/recipes/:id", async (req, res) => {
   }
 });
 
-router.get("/types", async (req, res) => {
-  const allDiets = await getDiets();
-
-  allDiets.forEach((diet) => {
-    Diet.findOrCreate({
-      where: {
-        name: diet,
-      },
-    });
-  });
-
-  let dietDb = await Diet.findAll();
-
-  res.status(200).send(dietDb);
-});
-
 router.post("/recipe", async (req, res) => {
-  let { name, summary, score, healthScore, steps, img, diets } =
-    req.body;
+  let { name, summary, score, healthScore, steps, img, diets } = req.body;
 
   try {
     let [recipeCreated, created] = await Recipe.findOrCreate({
@@ -121,7 +101,10 @@ router.post("/recipe", async (req, res) => {
     }
   } catch (error) {
     console.log(Error(error));
-  };
+  }
 });
 
-module.exports = router;
+module.exports = {
+  recipe: router,
+  diet: require("./diet"),
+};

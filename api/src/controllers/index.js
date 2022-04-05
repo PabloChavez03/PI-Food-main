@@ -9,11 +9,9 @@ const { Recipe, Diet } = require("../db");
 const getApiFoods = () => {
   const apiUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}`;
 
-  return Promise.all([
-    axios.get(apiUrl, { params: { addRecipeInformation: true, number: 40 } }),
-  ])
-    .then(([food]) => {
-      const data = [...food.data.results];
+  return axios.get(apiUrl, { params: { addRecipeInformation: true, number: 40 } })  
+    .then((food) => {
+      const data = food.data.results;
       return data?.map((f) => {
         return {
           id: f.id,
