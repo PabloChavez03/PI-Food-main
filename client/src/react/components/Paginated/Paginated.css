@@ -36,4 +36,5 @@
   color: #333333;
   border: 1px solid #55aa55;
   border-radius: 5px;
+  transition: .4s;
 }

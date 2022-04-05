@@ -87,7 +87,7 @@ const getApiDetailFood = (id) => {
         name: foodDetail.title,
         dishTypes: foodDetail.dishTypes?.map((type) => type),
         diets: foodDetail.diets?.map((diet) => diet).join(" "),
-        summary: foodDetail.summary.replace(/<[^>]*>?/g, ""),
+        summary: foodDetail.summary?.replace(/<[^>]*>?/g, ""),
         score: foodDetail.spoonacularScore,
         healthScore: foodDetail.healthScore,
         img: foodDetail.image,

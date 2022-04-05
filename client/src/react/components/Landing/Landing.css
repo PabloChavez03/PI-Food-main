@@ -31,4 +31,5 @@
 #landing__button:hover {
   border: 3px solid #d4ad4b;
   background-color: #f2d661;
+  transition: 1s;
 }

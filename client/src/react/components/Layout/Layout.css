@@ -55,6 +55,7 @@
   background-color: #77cc77;
   color: white;
   font-size: 1.2em;
+  transition: .4s;
 }
 
 #layout__title {
