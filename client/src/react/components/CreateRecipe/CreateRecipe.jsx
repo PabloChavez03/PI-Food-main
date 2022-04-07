@@ -60,7 +60,7 @@ export default function CreateRecipe() {
       err.steps = "Debe ingresar los pasos a seguir para realizar la receta";
     }
     if (!input.diets.length) {
-      err.diets = "Debe ingresar al menos dos tipos de dieta";
+      err.diets = "Debe ingresar al menos un tipo de dieta";
     }
 
     return err;
@@ -96,7 +96,7 @@ export default function CreateRecipe() {
     setError(
       validate({
         ...input,
-        diets: [...input.diets],
+        diets: [...input.diets, value],
       })
     );
   };
@@ -219,7 +219,8 @@ export default function CreateRecipe() {
           <input
             type="submit"
             value="Create"
-            disabled={Object.values(error).length === 0 ? false : true}
+            // disabled={Object.values(error).length === 0 ? false : true}
+            hidden={Object.values(error).length === 0 ? false : true}
             id="form__form-submit"
           />
         </form>
