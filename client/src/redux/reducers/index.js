@@ -1,4 +1,4 @@
-import { FILTER_PER_DIETS, GET_DIETS, GET_RECIPES, ORDER_BY_NAME, ORDER_BY_SCORE, GET_RECIPES_BY_NAME, GET_RECIPE_DETAIL, POST_RECIPE } from "../actions-types";
+import { FILTER_PER_DIETS, GET_DIETS, GET_RECIPES, ORDER_BY_NAME, ORDER_BY_SCORE, GET_RECIPES_BY_NAME, GET_RECIPE_DETAIL, POST_RECIPE, DELETE_DETAIL } from "../actions-types";
 
 const initialState = {
   recipesAll: [],
@@ -67,6 +67,11 @@ export default function reducer(state = initialState, action) {
         ...state,
         recipeDetail: action.payload,
       };
+    case DELETE_DETAIL :
+      return {
+        ...state,
+        recipeDetail: {},
+      }
     case POST_RECIPE :
       return {
         ...state,

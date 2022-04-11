@@ -85,8 +85,8 @@ export default function Home() {
         <Loader />
       ) : (
         <div className="cards__container">
-          {actualRecipesPerPage?.map((el) => (
-            <div className="cards__container-card">
+          {actualRecipesPerPage?.map((el,i) => (
+            <div className="cards__container-card" key={i}>
               <Link key={el.id} to={`/home/${el.id}`}>
                 <Recipe
                   name={el.name}

@@ -1,4 +1,5 @@
 .ordering__container-select {
   border-radius: 1em;
   border: none;
+  cursor: pointer;
 }

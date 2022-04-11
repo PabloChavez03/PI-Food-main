@@ -19,8 +19,8 @@ export default function Layout() {
           <div id="layout__title"><img src={image} alt="img not found"></img>Pi Food</div>
           <nav className="layout__navbar-header-nav">
             <ul>
-              {navLinks?.map((el) => (
-                <li>
+              {navLinks?.map((el,i) => (
+                <li key={i}>
                   <NavLink to={el.path} key={el.name}>
                     {el.name}
                   </NavLink>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FILTER_PER_DIETS, GET_DIETS, GET_RECIPES, GET_RECIPES_BY_NAME, GET_RECIPE_DETAIL, ORDER_BY_NAME, ORDER_BY_SCORE } from "../actions-types";
+import { DELETE_DETAIL, FILTER_PER_DIETS, GET_DIETS, GET_RECIPES, GET_RECIPES_BY_NAME, GET_RECIPE_DETAIL, ORDER_BY_NAME, ORDER_BY_SCORE } from "../actions-types";
 
 export const getRecipes = () => {
   return function (dispatch) {
@@ -73,5 +73,11 @@ export const postRecipe = (info) => {
     const post = axios.post("http://localhost:3001/recipe", info)
       .then(response => response);
     return post;    
+  }
+}
+
+export const deleteDetail = () => {
+  return {
+    type: DELETE_DETAIL,
   }
 }
