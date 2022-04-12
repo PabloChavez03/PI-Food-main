@@ -7,6 +7,7 @@ import {
   getRecipes,
   orderByName,
   orderByScore,
+  getRecipesByName,
 } from "../../../redux/actions-creators";
 import { Link } from "react-router-dom";
 
@@ -47,7 +48,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(getDiets());
   }, [dispatch]);
-
+  
   // useEffect(() =>  {
   //   actualRecipesPerPage.length? setLoading(false) : setLoading(true)
   // }, [actualRecipesPerPage])
@@ -78,11 +79,11 @@ export default function Home() {
           <Filter dietsAll={dietsAll} handleSelect={handleSelect} />
         </div>
 
-        <SearchBar />
+        <SearchBar getRecipesByName={getRecipesByName}/>
       </div>
 
       {!actualRecipesPerPage.length ? (
-        <Loader />
+        <Loader/>
       ) : (
         <div className="cards__container">
           {actualRecipesPerPage?.map((el,i) => (

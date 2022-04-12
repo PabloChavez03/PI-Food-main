@@ -56,12 +56,20 @@ export default function reducer(state = initialState, action) {
         };
       }
     case GET_RECIPES_BY_NAME:
-      return {
-        ...state,
-        recipesAll: state.recipesBackUp.filter((el) =>
-          el.name?.toLowerCase().includes(action.payload.toLowerCase())
-        ),
-      };
+      let demo = state.recipesBackUp.filter((el) =>
+        el.name?.toLowerCase().includes(action.payload.toLowerCase())
+      );
+      if (demo.length) {
+        return {
+          ...state,
+          recipesAll: demo,
+        }
+      } else {
+        return {
+          ...state,
+          recipesAll: state.recipesBackUp,
+        }
+      }
     case GET_RECIPE_DETAIL :
       return {
         ...state,

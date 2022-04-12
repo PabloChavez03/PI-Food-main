@@ -18,6 +18,7 @@ export default function RecipeDetail() {
     dispatch(getRecipeDetail(id));
       return () => {
         dispatch(deleteDetail());
+        //CUANDO SALGO DEL DETAIL SE DESMONTA
       }
   }, [dispatch, id]);
 
