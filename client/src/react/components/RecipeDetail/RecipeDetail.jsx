@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useParams } from "react-router-dom";
-import { getRecipeDetail,deleteDetail } from "../../../redux/actions-creators";
+import { useParams, useNavigate } from "react-router-dom";
+import { getRecipeDetail,deleteDetail,deleteDbRecipe } from "../../../redux/actions-creators";
 
 import "./RecipeDetail.css";
 
@@ -12,6 +12,7 @@ export default function RecipeDetail() {
   const { id } = useParams();
   // console.log(id);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   let detailRecipe = useSelector((state) => state.recipeDetail);
 
   useEffect(() => {
@@ -21,6 +22,21 @@ export default function RecipeDetail() {
         //CUANDO SALGO DEL DETAIL SE DESMONTA
       }
   }, [dispatch, id]);
+
+  const isUUID = (id) => {
+    const regex =
+      /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i;
+    return regex.test(id);
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    if (isUUID(id)) {
+      dispatch(deleteDbRecipe(id));
+    }
+    alert("Se elimino la receta correctamente");
+    navigate("/home");
+  }
 
   return (
     <div>
@@ -72,6 +88,10 @@ export default function RecipeDetail() {
             >
               <h3>Steps</h3>
               <p>{detailRecipe.steps}</p>
+            </div>
+            <div className="detail__right-container-upgrade">
+              <button hidden={!isUUID(id)} className="detail__right-container-upgrade-x" onClick={handleDelete}>Delete</button>
+              <button hidden={!isUUID(id)} className="detail__right-container-upgrade-y">Update</button>
             </div>
           </div>
         </div>

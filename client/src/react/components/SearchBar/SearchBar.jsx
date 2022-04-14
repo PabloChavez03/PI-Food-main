@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { getRecipeByNameTwo } from "../../../redux/actions-creators";
 // import { getRecipesByName } from "../../../redux/actions-creators";
 
 import "./SearchBar.css"
@@ -21,7 +22,8 @@ export default function SearchBar ({getRecipesByName}) {
 
   const handleOnClick = (e) => {
     e.preventDefault();
-    dispatch(getRecipesByName(input.name));
+    // dispatch(getRecipesByName(input.name));
+    dispatch(getRecipeByNameTwo(input.name)); //localhost:3001 => recipe?name=${name} 
     setInput({
       name: "",
     });

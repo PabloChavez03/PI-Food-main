@@ -1,4 +1,16 @@
-import { FILTER_PER_DIETS, GET_DIETS, GET_RECIPES, ORDER_BY_NAME, ORDER_BY_SCORE, GET_RECIPES_BY_NAME, GET_RECIPE_DETAIL, POST_RECIPE, DELETE_DETAIL } from "../actions-types";
+import {
+  FILTER_PER_DIETS,
+  GET_DIETS,
+  GET_RECIPES,
+  ORDER_BY_NAME,
+  ORDER_BY_SCORE,
+  GET_RECIPES_BY_NAME,
+  GET_RECIPE_DETAIL,
+  POST_RECIPE,
+  DELETE_DETAIL,
+  GET_RECIPE_BY_NAME_TWO,
+  DELETE_DB_RECIPE,
+} from "../actions-types";
 
 const initialState = {
   recipesAll: [],
@@ -46,7 +58,7 @@ export default function reducer(state = initialState, action) {
     case ORDER_BY_SCORE:
       if (action.payload === "s+") {
         return {
-            ...state,
+          ...state,
           recipesAll: [...state.recipesAll]?.sort((a, b) => b.score - a.score),
         };
       } else {
@@ -63,24 +75,33 @@ export default function reducer(state = initialState, action) {
         return {
           ...state,
           recipesAll: demo,
-        }
+        };
       } else {
         return {
           ...state,
           recipesAll: state.recipesBackUp,
-        }
+        };
       }
-    case GET_RECIPE_DETAIL :
+    case GET_RECIPE_BY_NAME_TWO:
+     return {
+       ...state,
+       recipesAll: action.payload,
+     }
+    case GET_RECIPE_DETAIL:
       return {
         ...state,
         recipeDetail: action.payload,
       };
-    case DELETE_DETAIL :
+    case DELETE_DETAIL:
       return {
         ...state,
         recipeDetail: {},
-      }
-    case POST_RECIPE :
+      };
+    case POST_RECIPE:
+      return {
+        ...state,
+      };
+    case DELETE_DB_RECIPE :
       return {
         ...state,
       };

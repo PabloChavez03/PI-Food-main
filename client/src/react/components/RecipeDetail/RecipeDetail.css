@@ -54,3 +54,16 @@
   height: 343px;
   border-radius: .5em;
 }
+
+.detail__right-container-upgrade {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.detail__right-container-upgrade-x {
+  margin: .5em;
+}
+
+.detail__right-container-upgrade-y {
+  margin: .5em
+}

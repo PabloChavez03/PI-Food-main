@@ -1,5 +1,5 @@
 import axios from "axios";
-import { DELETE_DETAIL, FILTER_PER_DIETS, GET_DIETS, GET_RECIPES, GET_RECIPES_BY_NAME, GET_RECIPE_DETAIL, ORDER_BY_NAME, ORDER_BY_SCORE } from "../actions-types";
+import { DELETE_DETAIL, FILTER_PER_DIETS, GET_DIETS, GET_RECIPES, GET_RECIPES_BY_NAME, GET_RECIPE_BY_NAME_TWO, GET_RECIPE_DETAIL, ORDER_BY_NAME, ORDER_BY_SCORE } from "../actions-types";
 
 export const getRecipes = () => {
   return function (dispatch) {
@@ -68,6 +68,19 @@ export const getRecipeDetail = (id) => {
   }
 }
 
+export const getRecipeByNameTwo = (name) => {
+  return function (dispatch) {
+    return axios(`http://localhost:3001/recipes?name=${name}`)
+    .then(response => response.data)
+    .then(json => {
+      dispatch({
+        type: GET_RECIPE_BY_NAME_TWO,
+        payload: json,
+      })
+    })
+  }
+}
+
 export const postRecipe = (info) => {
   return function (dispatch) {
     const post = axios.post("http://localhost:3001/recipe", info)
@@ -79,5 +92,12 @@ export const postRecipe = (info) => {
 export const deleteDetail = () => {
   return {
     type: DELETE_DETAIL,
+  }
+}
+
+export const deleteDbRecipe = (id) => {
+  return function (dispatch) {
+    return axios.delete(`http://localhost:3001/recipes/${id}`)
+      .then(response => response);
   }
 }

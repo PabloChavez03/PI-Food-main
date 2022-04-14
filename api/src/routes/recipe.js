@@ -104,6 +104,16 @@ router.post("/recipe", async (req, res) => {
   }
 });
 
+router.delete("/recipes/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    let deleted = await Recipe.destroy({ where: { id } });
+    res.status(200).send(`resource delete successfully ${deleted}`);
+  } catch (error) {
+    return new Error(error);
+  }
+});
+
 module.exports = {
   recipe: router,
   diet: require("./diet"),
