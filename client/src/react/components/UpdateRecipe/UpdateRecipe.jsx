@@ -76,7 +76,7 @@ export default function UpdateRecipe() {
       ...prev,
       [name]: value,
     }));
-    //demoError
+  
     setError(
       validate({
         ...input,
@@ -119,12 +119,25 @@ export default function UpdateRecipe() {
     );
   };
 
+  const validateInput = (input) => {
+    let okey = {};
+    for (let key in input) {
+      if (input[key]) {
+        okey[key] = input[key]
+      } else if (Array.isArray(input[key])) {
+        okey[key] = input[key]
+      }
+    };
+
+    return okey
+  }
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
     if (Object.values(error).length === 7) {
       alert("Faltan campos que rellenar");
-    } else {
-        dispatch(updateDbRecipe(id, input));
+    } else {  
+      dispatch(updateDbRecipe(id, validateInput(input)));
       alert("Receta actualizada correctamente");
       navigate("/home");
       console.log(input);

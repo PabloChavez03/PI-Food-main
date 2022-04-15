@@ -104,10 +104,9 @@ export const deleteDbRecipe = (id) => {
 
 export const updateDbRecipe = (id,info) => {
   return function (dispatch) {
-    return axios({
-      method: "put",
-      url: `http://localhost:3001/recipes/${id}`,
-      data: info
-    }).then((response) => response);
+    const update = axios.patch(`http://localhost:3001/recipes/${id}`, info)
+      .then(response => response);
+    console.log(update);
+    return update;
   }
 }
