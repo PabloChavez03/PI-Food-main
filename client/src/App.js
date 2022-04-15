@@ -8,6 +8,7 @@ import CreateRecipe from './react/components/CreateRecipe/CreateRecipe';
 import About from './react/components/About/About';
 import RecipeDetail from './react/components/RecipeDetail/RecipeDetail';
 import NotFound from './react/components/NotFound/NotFound';
+import UpdateRecipe from "./react/components/UpdateRecipe/UpdateRecipe";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path={"/home/"} element={<Home />} />
           <Route path={"/home/:id"} element={<RecipeDetail />} />
           <Route path={"/createrecipe"} element={<CreateRecipe />} />
+          <Route path={"/updaterecipe/:id"} element={<UpdateRecipe/>} />
           <Route path={"/about"} element={<About />} />
           <Route path={"*"} element={<NotFound />} />
         </Route>

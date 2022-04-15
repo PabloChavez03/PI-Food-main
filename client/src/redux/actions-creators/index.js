@@ -101,3 +101,13 @@ export const deleteDbRecipe = (id) => {
       .then(response => response);
   }
 }
+
+export const updateDbRecipe = (id,info) => {
+  return function (dispatch) {
+    return axios({
+      method: "put",
+      url: `http://localhost:3001/recipes/${id}`,
+      data: info
+    }).then((response) => response);
+  }
+}

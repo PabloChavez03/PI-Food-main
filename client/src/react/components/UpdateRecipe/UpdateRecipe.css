@@ -1,0 +1,91 @@
+.form__container {
+  display: flex;
+  justify-content: center;
+}
+
+.form__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 50%;
+  margin: 2em;
+  padding: 2em;
+}
+
+.form__form input {
+  margin: 1em 0em 0em 0em;
+  padding: 1em;
+  border-radius: 6px;
+}
+
+.form__form textarea {
+  margin: 1em 0em 0em 0em;
+  padding: 1em;
+  border-radius: 6px;
+}
+
+.form__form select {
+  margin: 1em 0em 0em 0em;
+  padding: 2px;
+  border-radius: 6px;
+}
+
+#form__form-submit {
+  padding: 1em;
+  background-color: #66bb66;
+  border: 3px solid #44aa44;
+  border-radius: 6px;
+  margin-top: 0;
+  cursor: pointer;
+}
+
+#form__form-submit:disabled {
+  padding: 1em;
+  margin-top: 0;
+  background-color: #bbbbbb;
+  border: 3px solid #44aa44;
+  border-radius: 6px;
+  cursor: default;
+}
+
+.diets_select__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  box-sizing: border-box;
+  /* border: 1px solid green; */
+}
+
+.diets_select__container-add {
+  display: flex;
+  flex-direction: row;
+  padding: .5em;
+  margin: .5em;
+  box-sizing: border-box;
+  border: 3px solid #66bb66;
+  border-radius: .5em;
+  background-color: #aaddaa;
+}
+
+.diets_select__container-add button {
+  margin-left: .5em;
+  background-color: #55bb55;
+  border: 3px solid #66bb66;
+  border-radius: .2em;
+  cursor: pointer;
+}
+
+.form__buttons {
+  display: flex;
+  margin-top: 1em;
+  justify-content: space-evenly;
+}
+
+#form__form-cancel {
+  padding: 1em;
+  background-color: #ff1111;
+  border: 3px solid #ff2222;
+  border-radius: 6px;
+  margin-top: 0;
+  cursor: pointer;
+}

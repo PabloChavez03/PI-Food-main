@@ -91,7 +91,8 @@ export default function RecipeDetail() {
             </div>
             <div className="detail__right-container-upgrade">
               <button hidden={!isUUID(id)} className="detail__right-container-upgrade-x" onClick={handleDelete}>Delete</button>
-              <button hidden={!isUUID(id)} className="detail__right-container-upgrade-y">Update</button>
+              <button hidden={!isUUID(id)} className="detail__right-container-upgrade-y"
+              onClick={() => {navigate(`/updaterecipe/${id}`)}}>Update</button>
             </div>
           </div>
         </div>

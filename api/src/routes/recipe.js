@@ -114,6 +114,31 @@ router.delete("/recipes/:id", async (req, res) => {
   }
 });
 
+router.put("/recipes/:id", async (req, res) => {
+  const id = req.params.id;
+  let { name, summary, score, healthScore, steps, img, diets } = req.body;
+
+  try {
+    let modified = await Recipe.update(
+      {
+        name,
+        summary,
+        score,
+        healthScore,
+        steps,
+        img,
+        diets,
+      },
+      { where: { id } }
+    );
+
+    res.status(200).send(`resource update successfully ${modified}`);
+
+  } catch (error) {
+    return new Error(error);
+  }
+});
+
 module.exports = {
   recipe: router,
   diet: require("./diet"),

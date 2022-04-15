@@ -10,6 +10,7 @@ import {
   DELETE_DETAIL,
   GET_RECIPE_BY_NAME_TWO,
   DELETE_DB_RECIPE,
+  UPDATE_DB_RECIPE,
 } from "../actions-types";
 
 const initialState = {
@@ -105,6 +106,10 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
       };
+    case UPDATE_DB_RECIPE :
+      return {
+        ...state,
+      }
     default:
       return state;
   }
