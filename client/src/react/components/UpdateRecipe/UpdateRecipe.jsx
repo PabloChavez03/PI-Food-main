@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Diets from "../Diets/Diets";
 import { useSelector, useDispatch } from "react-redux";
 import { getDiets, updateDbRecipe } from "../../../redux/actions-creators";
-import { useNavigate,useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import "./UpdateRecipe.css";
 import Loader from "../Loader/Loader";
@@ -76,7 +76,7 @@ export default function UpdateRecipe() {
       ...prev,
       [name]: value,
     }));
-  
+
     setError(
       validate({
         ...input,
@@ -120,34 +120,34 @@ export default function UpdateRecipe() {
   };
 
   const validateInput = (input) => {
-    let okey = {};
+    let exist = {};
     for (let key in input) {
       if (input[key]) {
-        okey[key] = input[key]
-      } else if (Array.isArray(input[key])) {
-        okey[key] = input[key]
+        exist[key] = input[key];
+        if (Array.isArray(input[key]) && input[key].length !== 0) {
+          exist[key] = input[key];
+        }
       }
-    };
-
-    return okey
-  }
+    }
+    return exist;
+  };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
     if (Object.values(error).length === 7) {
       alert("Faltan campos que rellenar");
-    } else {  
+    } else {
       dispatch(updateDbRecipe(id, validateInput(input)));
       alert("Receta actualizada correctamente");
       navigate("/home");
-      console.log(input);
+      console.log(validateInput(input));
     }
   };
 
   const handleCancel = (e) => {
     e.preventDefault();
-    navigate(-1)
-  }
+    navigate(-1);
+  };
 
   useEffect(() => {
     dispatch(getDiets());

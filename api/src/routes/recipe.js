@@ -119,7 +119,7 @@ router.patch("/recipes/:id", async (req, res) => {
   let { name, summary, score, healthScore, steps, img, diets } = req.body;
 
   try {
-    let modified = await Recipe.update(
+    let [modified] = await Recipe.update(
       {
         name,
         summary,
@@ -127,10 +127,19 @@ router.patch("/recipes/:id", async (req, res) => {
         healthScore,
         steps,
         img,
-        diets,
       },
       { where: { id } }
     );
+
+    //el problema que estoy teniendo es que actualizo todo menos el modelo de Diet que es de ahi donde saco las dietas realmente
+
+      //  let dietUpdate = await Diet.findAll({
+      //    where: {
+      //      name: diets,
+      //    },
+      //  });
+
+      //  await modified.addDiet(dietUpdate);
 
     res.status(200).send(`resource update successfully ${modified}`);
 
