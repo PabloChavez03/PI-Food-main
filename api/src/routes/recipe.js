@@ -119,32 +119,35 @@ router.patch("/recipes/:id", async (req, res) => {
   let { name, summary, score, healthScore, steps, img, diets } = req.body;
 
   try {
-    let [modified] = await Recipe.update(
-      {
-        name,
-        summary,
-        score,
-        healthScore,
-        steps,
-        img,
-      },
-      { where: { id } }
-    );
+    const recipeUpdate = await Recipe.findByPk(id);
+    // console.log(recipeUpdate)
 
-    //el problema que estoy teniendo es que actualizo todo menos el modelo de Diet que es de ahi donde saco las dietas realmente
+    await recipeUpdate.update({
+      name,
+      summary,
+      score,
+      healthScore,
+      steps,
+      img,
+    });
+    if (diets) {
+      diets.forEach( async (el) => {
+       let demo = await Diet.findOne({where: { name: el}});
+        if (demo) {
+          await recipeUpdate.setDiets(demo);
+        }
+      })
+      await recipeUpdate.save();
+    }
 
-      //  let dietUpdate = await Diet.findAll({
-      //    where: {
-      //      name: diets,
-      //    },
-      //  });
+    await recipeUpdate.save();
 
-      //  await modified.addDiet(dietUpdate);
-
-    res.status(200).send(`resource update successfully ${modified}`);
-
+    return res
+      .status(200)
+      .send(`resource update successfully ${recipeUpdate.name}`);
   } catch (error) {
-    return new Error(error);
+    console.log(error);
+    return res.status(409).json({ message: error });
   }
 });
 
