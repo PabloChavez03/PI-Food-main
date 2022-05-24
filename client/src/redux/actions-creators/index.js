@@ -3,7 +3,7 @@ import { DELETE_DETAIL, FILTER_PER_DIETS, GET_DIETS, GET_RECIPES, GET_RECIPES_BY
 
 export const getRecipes = () => {
   return function (dispatch) {
-    return axios("http://localhost:3001/recipes")
+    return axios("/recipes")
       .then((response) => response.data)
       .then((json) => {
         dispatch({
@@ -16,7 +16,7 @@ export const getRecipes = () => {
 
 export const getDiets = () => {
   return function (dispatch) {
-    return axios("http://localhost:3001/types")
+    return axios("/types")
       .then(response => response.data)
       .then(json => {
         dispatch({
@@ -57,7 +57,7 @@ export const getRecipesByName = (name) => {
 
 export const getRecipeDetail = (id) => {
   return function (dispatch) {
-    return axios(`http://localhost:3001/recipes/${id}`)
+    return axios(`/recipes/${id}`)
       .then(response => response.data)
       .then(json => {
         dispatch({
@@ -70,7 +70,7 @@ export const getRecipeDetail = (id) => {
 
 export const getRecipeByNameTwo = (name) => {
   return function (dispatch) {
-    return axios(`http://localhost:3001/recipes?name=${name}`)
+    return axios(`/recipes?name=${name}`)
     .then(response => response.data)
     .then(json => {
       dispatch({
@@ -83,7 +83,7 @@ export const getRecipeByNameTwo = (name) => {
 
 export const postRecipe = (info) => {
   return function (dispatch) {
-    const post = axios.post("http://localhost:3001/recipe", info)
+    const post = axios.post("/recipe", info)
       .then(response => response);
     return post;    
   }
@@ -97,14 +97,14 @@ export const deleteDetail = () => {
 
 export const deleteDbRecipe = (id) => {
   return function (dispatch) {
-    return axios.delete(`http://localhost:3001/recipes/${id}`)
+    return axios.delete(`/recipes/${id}`)
       .then(response => response);
   }
 }
 
 export const updateDbRecipe = (id,info) => {
   return function (dispatch) {
-    const update = axios.patch(`http://localhost:3001/recipes/${id}`, info)
+    const update = axios.patch(`/recipes/${id}`, info)
       .then(response => response);
     console.log(update);
     return update;
