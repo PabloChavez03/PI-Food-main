@@ -33,6 +33,29 @@ const getApiFoods = () => {
 };
 // getApiFoods().then((data) => console.log(data));
 
+//almacenar la info de la api en db
+
+//le falta poco pero no es asi
+const pullApiFoodInDb = () => {
+  return getApiFoods().then((response) => {
+    return response?.map((el) => {
+      return Recipe.create({
+        id: el.id,
+        name: el.name,
+        summary: el.summary,
+        score: el.score,
+        healthScore: el.healthScore,
+        steps: el.steps,
+        img: el.img,
+        diets: el.diets?.map((diet) => diet.name).join(" "),
+        createdInDB: el?.createdInDB,
+      })
+    })
+  })
+};
+
+// pullApiFoodInDb().then(data => data)
+
 //traigo las recetas de la base de datos
 const getDbFoods = () => {
   return Recipe.findAll({
