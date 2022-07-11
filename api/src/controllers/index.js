@@ -19,19 +19,44 @@ const getApiFoods = () => {
           summary: f.summary.replace(/<[^>]*>?/g, ""),
           score: f.spoonacularScore,
           healthScore: f.healthScore,
-          steps: f.analyzedInstructions?.map((searchStep) =>
-            searchStep.steps?.map((el) => {
-              return { number: el.number, step: el.step };
-            })
-          ),
           img: f.image,
-          diets: f.diets?.map((diet) => diet).join(" "),
+          diets: f.diets?.map((diet) => diet),
         };
       });
     })
     .catch((error) => console.log(error));
 };
+
 // getApiFoods().then((data) => console.log(data));
+
+//almacenar la info de la api en db
+
+const pullApiFoodInDb = () => {
+  return getApiFoods().then((response) => {
+    return response?.map(async (el) => {
+      const [recipes,booleano] = await Recipe.findOrCreate({
+        where: {
+          createdInDB: true,
+          name: el.name,
+          summary: el.summary,
+          score: el.healthScore,
+          healthScore: el.healthScore,
+          img: el.img,
+        }
+      });
+
+      const diets = await Diet.findAll({
+        where: {
+          name: el.diets && el.diets,
+        }
+      })
+
+      await recipes.addDiet(diets);
+
+      return recipes;
+      })
+    })
+  }
 
 //traigo las recetas de la base de datos
 const getDbFoods = () => {
@@ -52,7 +77,6 @@ const getDbFoods = () => {
           summary: foodsDb.summary,
           score: foodsDb.score,
           healthScore: foodsDb.healthScore,
-          steps: foodsDb.steps,
           img: foodsDb.img,
           diets: foodsDb.diets?.map((diet) => diet.name).join(" "),
           createdInDB: foodsDb.createdInDB,
@@ -61,44 +85,14 @@ const getDbFoods = () => {
     })
     .catch((error) => new TypeError(error));
 };
-// getDbFoods().then(data => console.log(data));
 
 //traigo todas las recetas juntas
 const getAllFoods = async () => {
-  const apiFoods = await getApiFoods();
-  const dbFoods = await getDbFoods();
-  const allFoods = apiFoods?.concat(dbFoods);
+  await pullApiFoodInDb();
+  const dbFoods = getDbFoods();
 
-  return allFoods;
+  return dbFoods;
 };
-// getAllFood().then((data)=> console.log(data));
-
-
-const getApiDetailFood = (id) => {
-  const apiUrl = `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`;
-
-  const apiInfo = axios(apiUrl)
-    .then((response) => response.data)
-    .catch(error => new TypeError(error));
-  
-  const apiDetail = apiInfo
-    .then((foodDetail) => {
-      return {
-        name: foodDetail.title,
-        dishTypes: foodDetail.dishTypes?.map((type) => type),
-        diets: foodDetail.diets?.map((diet) => diet).join(" "),
-        summary: foodDetail.summary?.replace(/<[^>]*>?/g, ""),
-        score: foodDetail.spoonacularScore,
-        healthScore: foodDetail.healthScore,
-        img: foodDetail.image,
-        steps: foodDetail.instructions?.replace(/<[^>]*>?/g, ""),
-      };
-    })
-    .catch(error => new TypeError(error));
-  
-    return apiDetail;
-}
-// getApiDetailFood(716426).then(data => console.log(data));
 
 const getDbDetailFood = async (id) => {
   const foods = await Recipe.findByPk(id, {
